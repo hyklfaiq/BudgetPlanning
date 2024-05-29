@@ -15,6 +15,7 @@ public class BudgetPlanning extends Application {
     private ArrayList<BudgetCategory> categories;
     private static final String FILE_NAME = "budget_data.txt";
     private static final String[] FIXED_CATEGORIES = {"Utilities", "Groceries", "Insurance", "Transportation", "Other Expenses"};
+    private static final String[] PERIOD_OPTIONS = {"Weekly", "Monthly"};
 
     public BudgetPlanning() {
         categories = new ArrayList<>();
@@ -40,15 +41,23 @@ public class BudgetPlanning extends Application {
         categoryComboBox.getItems().addAll(FIXED_CATEGORIES);
         TextField budgetAmountField = new TextField();
         budgetAmountField.setPromptText("Enter budget amount");
+        ComboBox<String> periodComboBox = new ComboBox<>();
+        periodComboBox.getItems().addAll(PERIOD_OPTIONS);
+        periodComboBox.setValue(PERIOD_OPTIONS[1]); // Default to Monthly
         Button setBudgetButton = new Button("Set Budget");
 
         setBudgetButton.setOnAction(e -> {
             String selectedCategory = categoryComboBox.getValue();
             double amount = Double.parseDouble(budgetAmountField.getText());
+            String selectedPeriod = periodComboBox.getValue();
             BudgetCategory category = findCategoryByName(selectedCategory);
             if (category != null) {
                 category.resetSpentAmount();
-                categories.set(categoryComboBox.getSelectionModel().getSelectedIndex(), new MonthlyBudgetCategory(category.getName(), amount));
+                if (selectedPeriod.equals(PERIOD_OPTIONS[0])) { // Weekly
+                    categories.set(categoryComboBox.getSelectionModel().getSelectedIndex(), new WeeklyBudgetCategory(category.getName(), amount));
+                } else { // Monthly
+                    categories.set(categoryComboBox.getSelectionModel().getSelectedIndex(), new MonthlyBudgetCategory(category.getName(), amount));
+                }
                 saveCategories();
                 budgetAmountField.clear();
             }
@@ -57,12 +66,14 @@ public class BudgetPlanning extends Application {
         GridPane budgetSetupGrid = new GridPane();
         budgetSetupGrid.setHgap(10);
         budgetSetupGrid.setVgap(10);
-        budgetSetupGrid.add(setBudgetLabel, 0, 0, 2, 1);
+        budgetSetupGrid.add(setBudgetLabel, 0, 0, 3, 1);
         budgetSetupGrid.add(new Label("Category:"), 0, 1);
         budgetSetupGrid.add(categoryComboBox, 1, 1);
         budgetSetupGrid.add(new Label("Budget Amount:"), 0, 2);
         budgetSetupGrid.add(budgetAmountField, 1, 2);
-        budgetSetupGrid.add(setBudgetButton, 1, 3);
+        budgetSetupGrid.add(new Label("Period:"), 0, 3);
+        budgetSetupGrid.add(periodComboBox, 1, 3);
+        budgetSetupGrid.add(setBudgetButton, 1, 4);
 
         // Expense addition section
         Label addExpenseLabel = new Label("Add Expense");
@@ -155,3 +166,4 @@ public class BudgetPlanning extends Application {
         }
     }
 }
+

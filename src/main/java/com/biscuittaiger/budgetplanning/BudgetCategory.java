@@ -41,8 +41,6 @@ abstract class BudgetCategory {
         this.spentAmount = 0;
     }
 
-    public abstract void displayCategoryInfo();
-
     public String toFileString() {
         return name + "," + budgetAmount + "," + spentAmount + "," + period;
     }
