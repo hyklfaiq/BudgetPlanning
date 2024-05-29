@@ -6,9 +6,5 @@ class MonthlyBudgetCategory extends BudgetCategory {
     }
 
 
-    @Override
-    public void addExpense(double amount) {
-        super.addExpense(amount);
-        System.out.println("Expense added to monthly category: " + getName());
-    }
+
 }

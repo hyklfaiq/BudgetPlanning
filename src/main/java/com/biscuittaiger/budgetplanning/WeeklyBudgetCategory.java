@@ -6,10 +6,6 @@ class WeeklyBudgetCategory extends BudgetCategory {
     }
 
 
-    @Override
-    public void addExpense(double amount) {
-        super.addExpense(amount);
-        System.out.println("Expense added to weekly category: " + getName());
-    }
+
 
 }

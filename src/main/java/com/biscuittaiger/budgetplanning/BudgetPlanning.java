@@ -83,26 +83,13 @@ public class BudgetPlanning extends Application {
         expenseAmountField.setPromptText("Enter expense amount");
         Button addExpenseButton = new Button("Add Expense");
 
-        addExpenseButton.setOnAction(e -> {
-            String selectedCategory = expenseCategoryComboBox.getValue();
-            double amount = Double.parseDouble(expenseAmountField.getText());
-            BudgetCategory category = findCategoryByName(selectedCategory);
-            if (category != null) {
-                category.addExpense(amount);
-                saveCategories();
-                expenseAmountField.clear();
-            }
-        });
+        ;
 
         GridPane expenseGrid = new GridPane();
         expenseGrid.setHgap(10);
         expenseGrid.setVgap(10);
-        expenseGrid.add(addExpenseLabel, 0, 0, 2, 1);
-        expenseGrid.add(new Label("Category:"), 0, 1);
-        expenseGrid.add(expenseCategoryComboBox, 1, 1);
-        expenseGrid.add(new Label("Expense Amount:"), 0, 2);
-        expenseGrid.add(expenseAmountField, 1, 2);
-        expenseGrid.add(addExpenseButton, 1, 3);
+
+
 
         // Show budget status section
         Button showBudgetStatusButton = new Button("Show Budget Status");

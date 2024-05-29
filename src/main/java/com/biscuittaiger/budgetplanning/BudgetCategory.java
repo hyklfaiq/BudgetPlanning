@@ -29,9 +29,7 @@ abstract class BudgetCategory {
         return period;
     }
 
-    public void addExpense(double amount) {
-        this.spentAmount += amount;
-    }
+
 
     public boolean isWithinBudget() {
         return this.spentAmount <= this.budgetAmount;
