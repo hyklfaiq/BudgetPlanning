@@ -3,13 +3,20 @@ package com.biscuittaiger.budgetplanning;
 abstract class BudgetCategory {
     private String name;
     private double budgetAmount;
-    private double spentAmount;
+    protected double spentAmount;
     private String period;
 
     public BudgetCategory(String name, double budgetAmount, String period) {
         this.name = name;
         this.budgetAmount = budgetAmount;
         this.spentAmount = 0;
+        this.period = period;
+    }
+
+    public BudgetCategory(String name, double budgetAmount, double spentAmount, String period) {
+        this.name = name;
+        this.budgetAmount = budgetAmount;
+        this.spentAmount = spentAmount;
         this.period = period;
     }
 
@@ -29,15 +36,15 @@ abstract class BudgetCategory {
         return period;
     }
 
-
+    public void addExpense(double amount) {
+        this.spentAmount += amount;
+    }
 
     public boolean isWithinBudget() {
         return this.spentAmount <= this.budgetAmount;
     }
 
-    public void resetSpentAmount() {
-        this.spentAmount = 0;
-    }
+    public abstract void displayCategoryInfo();
 
     public String toFileString() {
         return name + "," + budgetAmount + "," + spentAmount + "," + period;
@@ -49,8 +56,11 @@ abstract class BudgetCategory {
         double budgetAmount = Double.parseDouble(parts[1]);
         double spentAmount = Double.parseDouble(parts[2]);
         String period = parts[3];
-        BudgetCategory category = new MonthlyBudgetCategory(name, budgetAmount);
-        category.spentAmount = spentAmount;
-        return category;
+
+        if (period.equals("weekly")) {
+            return new WeeklyBudgetCategory(name, budgetAmount, spentAmount);
+        } else {
+            return new MonthlyBudgetCategory(name, budgetAmount, spentAmount);
+        }
     }
 }

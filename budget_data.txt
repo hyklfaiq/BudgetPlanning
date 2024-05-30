@@ -1,4 +1,4 @@
-Utilities,600.0,0.0,monthly
+Utilities,8.0,3.0,monthly
 Groceries,0.0,0.0,monthly
 Insurance,0.0,0.0,monthly
 Transportation,0.0,0.0,monthly
